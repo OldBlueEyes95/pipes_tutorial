@@ -17,11 +17,11 @@ int main(int argc, char* argv[]){
     }
 
     int fd = open("sum", O_WRONLY); // Get the file descriptor
-    if(fd == -1){
+    if (fd == -1) {
         return 1; // Error occurred
     }
 
-    for(int i = 0; i < 5; i++){
+    for (int i = 0; i < 5; i++) {
         if(write(fd, &arr[i], sizeof(int)) == -1){
             return 2; // Error occurred while writing
         }
@@ -29,6 +29,18 @@ int main(int argc, char* argv[]){
     }
 
     close(fd);
+    
+    int fd2 = open("sum", O_RDONLY); if (fd == -1) { return 1; }
+    int result = -1;
+    
+    for (int i; i < 5; ++i) {
+        if (read(fd2, &result, sizeof(int)) == -1) { return 2; }
+    }
+    
+    if (result != arr[4]) {
+        if (read(fd2, &result, sizeof(int)) == -1) { return 2; }
+        printf("Result from user2 is %d\n", result);
+    }
 
     return 0;
 }

@@ -35,5 +35,12 @@ int main(int argc, char* argv[]){
 
     printf("Result is %d\n", sum);
     
+    
+    int fd2 = open("sum", O_WRONLY); if (fd2 == -1) { return 1; }
+    
+    if (write(fd2, &sum, sizeof(int)) == -1) { return 2; }
+    close(fd2);
+    
+    
     return 0;
 }
